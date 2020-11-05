@@ -100,8 +100,14 @@ public class RenameToOneFolder {
             int errors;
             if(args.length != 0){
                 Path exPath = Paths.get(args[0]);
-                List<String> excludeList = Files.readAllLines(exPath);
-                errors = renameMp3sWithExclude(dir.getPath(), dir,excludeList);
+                if(Files.exists(exPath)) {
+                    List<String> excludeList = Files.readAllLines(exPath);
+                    errors = renameMp3sWithExclude(dir.getPath(), dir,excludeList);
+                }
+                else {
+                    System.out.println("\nInvalid argument found. Try again.\nThe argument should be the path to .txt file containing names of directories to be excluded.");
+                    return;
+                }
             }
             else {
                 errors = renameMp3s(dir.getPath(), dir);
